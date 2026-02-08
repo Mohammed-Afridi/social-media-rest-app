@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 public class UserDaoService {
     private static List<User> users = new ArrayList<>();
 
-    private static int userscount = 3;
+    private static int userscount = 0;
 
     static{
         users.add(new User(++userscount,"Adam", LocalDate.now().minusYears(30)));
