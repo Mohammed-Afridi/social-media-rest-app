@@ -30,6 +30,6 @@ public class UserResource {
     //POST User
     @PostMapping("/users")
     public void CreateUser(@RequestBody User user){
-
+        userDaoService.save(user);
     }
 }
