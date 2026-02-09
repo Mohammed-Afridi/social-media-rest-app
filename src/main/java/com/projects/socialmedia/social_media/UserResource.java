@@ -1,5 +1,6 @@
 package com.projects.socialmedia.social_media;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,8 @@ public class UserResource {
 
     //POST User
     @PostMapping("/users")
-    public void CreateUser(@RequestBody User user){
+    public ResponseEntity<User> CreateUser(@RequestBody User user){
         userDaoService.save(user);
+        return ResponseEntity.created(null).build();
     }
 }
