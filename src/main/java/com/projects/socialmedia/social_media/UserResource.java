@@ -2,7 +2,9 @@ package com.projects.socialmedia.social_media;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -31,7 +33,15 @@ public class UserResource {
     //POST User
     @PostMapping("/users")
     public ResponseEntity<User> CreateUser(@RequestBody User user){
-        userDaoService.save(user);
-        return ResponseEntity.created(null).build();
+        User savedUser = userDaoService.save(user);
+
+        // Here we are trying to return the location of the created resource to consumer
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedUser.getId())
+                .toUri();
+
+
+        return ResponseEntity.created(location).build();
     }
 }
