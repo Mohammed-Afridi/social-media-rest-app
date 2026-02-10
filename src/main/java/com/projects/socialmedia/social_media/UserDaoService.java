@@ -15,7 +15,7 @@ public class UserDaoService {
 
     static{
         users.add(new User(++userscount,"Adam", LocalDate.now().minusYears(30)));
-        users.add(new User(++userscount,"Goli", LocalDate.now().minusYears(23)));
+        users.add(new User(++userscount,"Goliiiii", LocalDate.now().minusYears(23)));
         users.add(new User(++userscount,"Baje", LocalDate.now().minusYears(25)));
     }
 
@@ -27,7 +27,7 @@ public class UserDaoService {
         // here first thought which comes is how to do , Normal programmer will use
         // for loop on user and get the right user
         Predicate<? super User> predicate = user -> user.getId().equals(id);
-         return users.stream().filter(predicate).findFirst().get();
+         return users.stream().filter(predicate).findFirst().orElse(null);
     }
 
     public User save(User user){
