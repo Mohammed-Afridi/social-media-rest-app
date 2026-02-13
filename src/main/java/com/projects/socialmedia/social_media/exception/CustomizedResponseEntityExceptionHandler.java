@@ -4,8 +4,12 @@ package com.projects.socialmedia.social_media.exception;
 // we need to extend and override that to customize
 
 import com.projects.socialmedia.social_media.UserNotFoundException;
+import org.jspecify.annotations.Nullable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -37,5 +41,18 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         ErrorDetails errorDetails = new ErrorDetails(LocalDate.now(),ex.getMessage(),request.getDescription(false));
 
         return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        // Here we are actually overriding , not like above.. anove was just creating a new method
+        // Now copy the above lines from the method to customize
+
+        ErrorDetails errorDetails = new ErrorDetails(LocalDate.now(),"Total Errors :" + ex.getErrorCount() + ex.getFieldError().getDefaultMessage(),request.getDescription(false));
+
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+
+        //After writing this method , we get message , but its still a long message. so we have to customize in User.java
+
     }
 }

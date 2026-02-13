@@ -1,5 +1,6 @@
 package com.projects.socialmedia.social_media;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,7 +44,7 @@ public class UserResource {
 
     //POST User
     @PostMapping("/users")
-    public ResponseEntity<User> CreateUser(@RequestBody User user){
+    public ResponseEntity<User> CreateUser(@Valid @RequestBody User user){ // @Valid - you can't enter a blank name
         User savedUser = userDaoService.save(user);
 
         // Here we are trying to return the location of the created resource to consumer
