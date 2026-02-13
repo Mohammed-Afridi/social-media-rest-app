@@ -46,12 +46,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>3.0.1</version>
 		</dependency>
-<!--		Use http://localhost:8080/swagger-ui.html to open swagger-->
+&lt;!&ndash;		Use http://localhost:8080/swagger-ui.html to open swagger&ndash;&gt;
+
+		<dependency>
+			<groupId>tools.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>3.0.3</version>
+		</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
