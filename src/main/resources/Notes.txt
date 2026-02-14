@@ -4,3 +4,5 @@ In this commit , we will create a user repository, we want our UserResource (Con
 So far we have create a lot of "users" rest api , now we will create "Post" rest api
 1.Retreive all social media post for sepcific user
 2.Create a post for a user
+
+Int his commit we will build api methods for post

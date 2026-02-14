@@ -42,6 +42,18 @@ public class UserJpaResource { //Creating this copy from UerResourdce to play wi
         repository.deleteById(id);
     }
 
+    @GetMapping("/jpa/users/{id}/posts")
+    public List<Post> retrievePostsForUser(@PathVariable int id){
+        Optional<User> user = repository.findById(id);
+
+        if(user.isEmpty()) // when we try to do /users/101 ( User not found )
+            throw new UserNotFoundException("id : "+id);
+
+        // If user exists we will see his posts
+
+        return user.get().getPosts();
+    }
+
     //POST User
     @PostMapping("/jpa/users")
     public ResponseEntity<User> CreateUser(@Valid @RequestBody User user){ // @Valid - you can't enter a blank name
