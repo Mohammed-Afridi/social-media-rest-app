@@ -8,48 +8,44 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserJpaResource { //Creating this copy from UerResourdce to play with Jpa
 
-    // Because UserDaoService is a component managed by spring autowire it
-
-    private UserDaoService userDaoService;
-
     private UserRepository repository;
 
-    public UserJpaResource(UserDaoService userDaoService, UserRepository repository) {
-        this.userDaoService = userDaoService;
+    public UserJpaResource(UserRepository repository) {
         this.repository = repository;
     }
 
     // GET Users
     @GetMapping("/jpa/users")
     public List<User> retrieveAllUsers(){
-        return  userDaoService.findAll();
+        return  repository.findAll();
     }
 
     // GET Speicific user
     @GetMapping("/jpa/users/{id}")
     public User retrieveUser(@PathVariable int id){
 
-        User user = userDaoService.findOne(id);
+        Optional<User> user = repository.findById(id);
 
-        if(user==null) // when we try to do /users/101 ( User not found )
+        if(user.isEmpty()) // when we try to do /users/101 ( User not found )
             throw new UserNotFoundException("id : "+id);
-        return user;
+        return user.get();
     }
 
     // Delete Speicific user
     @DeleteMapping("/jpa/users/{id}")
     public void deleteUser(@PathVariable int id){
-        userDaoService.deleteById(id);
+        repository.deleteById(id);
     }
 
     //POST User
     @PostMapping("/jpa/users")
     public ResponseEntity<User> CreateUser(@Valid @RequestBody User user){ // @Valid - you can't enter a blank name
-        User savedUser = userDaoService.save(user);
+        User savedUser = repository.save(user);
 
         // Here we are trying to return the location of the created resource to consumer
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()

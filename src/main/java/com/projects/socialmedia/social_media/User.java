@@ -11,6 +11,10 @@ import java.time.LocalDate;
 @Entity(name = "user_details")
 public class User { // If we use User then error because user is table , change the name
 
+
+    protected User() {
+    }
+
     @Id
     @GeneratedValue
     private Integer id;
