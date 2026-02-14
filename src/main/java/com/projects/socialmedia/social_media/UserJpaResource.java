@@ -1,5 +1,6 @@
 package com.projects.socialmedia.social_media;
 
+import com.projects.socialmedia.social_media.jpa.PostRepository;
 import com.projects.socialmedia.social_media.jpa.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,11 @@ public class UserJpaResource { //Creating this copy from UerResourdce to play wi
 
     private UserRepository repository;
 
-    public UserJpaResource(UserRepository repository) {
+    private PostRepository postRepository; // This is to create posts
+
+    public UserJpaResource(UserRepository repository , PostRepository postRepository) {
         this.repository = repository;
+        this.postRepository = postRepository;
     }
 
     // GET Users
@@ -65,6 +69,26 @@ public class UserJpaResource { //Creating this copy from UerResourdce to play wi
                 .buildAndExpand(savedUser.getId())
                 .toUri();
 
+
+        return ResponseEntity.created(location).build();
+    }
+
+    @PostMapping("/jpa/users/{id}/posts")
+    public ResponseEntity<Object> createPostsForUser(@PathVariable int id, @Valid @RequestBody Post post){
+        Optional<User> user = repository.findById(id);
+
+        if(user.isEmpty()) // when we try to do /users/101 ( User not found )
+            throw new UserNotFoundException("id : "+id);
+
+        //Now Set user to the Post
+        post.setUser(user.get());
+
+        Post savedPost = postRepository.save(post);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedPost.getId())
+                .toUri();
 
         return ResponseEntity.created(location).build();
     }

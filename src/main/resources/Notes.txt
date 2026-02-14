@@ -6,3 +6,5 @@ So far we have create a lot of "users" rest api , now we will create "Post" rest
 2.Create a post for a user
 
 Int his commit we will build api methods for post
+
+In this commit we will see how to create a post
