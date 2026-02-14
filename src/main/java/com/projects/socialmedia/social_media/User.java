@@ -1,12 +1,18 @@
 package com.projects.socialmedia.social_media;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-public class User {
+@Entity(name = "user_details")
+public class User { // If we use User then error because user is table , change the name
 
+    @Id
+    @GeneratedValue
     private Integer id;
     @Size(min=2, message="Names should have more than two characters")
     private String name;
