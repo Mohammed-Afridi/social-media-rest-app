@@ -1,0 +1,2 @@
+In the previous commit we got our user entity setup
+In this commit , we will create a user repository, we want our UserResource (Controller) talking to database
